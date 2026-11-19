@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Radiografia da dose: efeitos da radiação no corpo</title>
+<style>
+:root{--bg:#eef2f6;--card:#fff;--ink:#12202e;--mut:#506274;--line:#cfd8e1;--body:#d5e0ea;--muscle:#d27a6e;--muscle2:#e59a8c;--bone:#ffffff;--ok:#2f9e6e;--warn:#e8a31a;--bad:#d9382b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08121d;--card:#10202f;--ink:#e6f0f8;--mut:#93a8bb;--line:#223648;--body:#1b3348;--muscle:#7d3333;--muscle2:#9a4646;--bone:#b7cfe2}}
+:root[data-theme="dark"]{--bg:#08121d;--card:#10202f;--ink:#e6f0f8;--mut:#93a8bb;--line:#223648;--body:#1b3348;--muscle:#7d3333;--muscle2:#9a4646;--bone:#b7cfe2}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:16px}
+main{max-width:760px;margin:0 auto}
+h1{font-size:1.5rem;line-height:1.2;margin:4px 0 4px;letter-spacing:-.01em}
+.sub{color:var(--mut);margin:0 0 16px;font-size:.95rem}
+.grid{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:16px;align-items:start}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+svg{display:block;width:100%;max-width:300px;margin:0 auto;height:auto}
+.dose{font-variant-numeric:tabular-nums;font-size:2.6rem;font-weight:700;line-height:1}
+.dose small{font-size:1rem;font-weight:500;color:var(--mut)}
+input[type=range]{width:100%;height:36px;accent-color:var(--bad)}
+.scale{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--ok),var(--warn) 35%,var(--bad) 75%,#7a1010);margin:2px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+button{font:inherit;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+h2{font-size:1.15rem;margin:12px 0 4px}
+ul{margin:6px 0 0;padding-left:20px}
+li{margin:3px 0}
+.tag{display:inline-block;border-radius:6px;padding:2px 8px;font-size:.85rem;font-weight:600;color:#fff}
+.org{transition:fill .4s,opacity .4s,stroke .4s}
+.pulse{animation:p 1.4s ease-in-out infinite}
+@keyframes p{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.pulse{animation:none}.org{transition:none}}
+.note{color:var(--mut);font-size:.85rem;margin-top:12px}
+.oc{cursor:pointer;transition:filter .4s}
+.d1,.d2{filter:drop-shadow(0 0 3px var(--c)) drop-shadow(0 0 7px var(--c))}
+.d2{animation:p 1.1s ease-in-out infinite}
+.ray{stroke:#f0a500;stroke-dasharray:6 10;stroke-linecap:round;animation:f var(--spd,1s) linear infinite}
+@keyframes f{to{stroke-dashoffset:-16}}
+@media (prefers-reduced-motion:reduce){.ray,.d2{animation:none}}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.mu{stroke:#000;stroke-opacity:.25;stroke-width:1}
+#sv .oc path[fill^="#"],#sv .oc ellipse[fill^="#"]{fill-opacity:.8;stroke:#000;stroke-opacity:.4;stroke-width:1}
+</style>
+</head>
+<body>
+<main>
+<h1>Radiografia da dose</h1>
+<p class="sub">Arraste o controle e veja o que uma dose alta de radiação faz no corpo humano.</p>
+<div class="grid">
+<div class="card">
+<svg id="sv" viewBox="0 0 280 400" role="img" aria-label="Corpo humano com músculos, ossos e órgãos, e uma fonte de radiação">
+<defs>
+<g id="arm"><path d="M46 86 Q26 90 26 114 Q24 140 30 164 Q22 190 20 214 L36 218 Q48 192 52 164 Q56 140 54 102Z"/><path d="M20 214 Q12 228 15 242 Q19 250 25 246 Q29 252 33 246 Q38 248 38 238 L36 218Z" fill="#dcae94"/></g>
+<g id="leg"><path d="M54 244 Q46 290 58 326 Q54 346 60 370 L56 388 Q56 394 72 394 L90 394 Q92 384 86 372 Q92 346 92 326 Q100 290 100 250Z"/></g>
+<g id="sil"><path d="M88 56 L88 76 Q100 84 112 76 L112 56Z"/><path d="M88 70 Q70 76 48 86 Q36 92 38 108 L48 150 Q56 190 60 212 Q52 232 54 246 L146 246 Q148 232 140 212 Q144 190 152 150 L162 108 Q164 92 152 86 Q130 76 112 70Z"/><use href="#arm"/><use href="#arm" transform="translate(200,0) scale(-1,1)"/><use href="#leg"/><use href="#leg" transform="translate(200,0) scale(-1,1)"/></g>
+<g id="armM"><path class="mu" fill="var(--muscle2)" d="M46 86 Q26 90 26 114 Q40 112 54 102Z"/><path class="mu" fill="var(--muscle2)" d="M30 120 Q28 142 32 162 Q42 166 50 160 Q52 140 50 112Z"/><path class="mu" fill="var(--muscle2)" d="M28 172 Q24 194 22 212 L34 214 Q42 196 46 172Z"/><path fill="none" stroke="#000" stroke-opacity=".22" d="M32 124 Q30 144 34 160 M40 120 Q40 142 42 162 M46 116 Q48 140 48 160 M26 178 Q24 196 24 210 M32 174 Q30 196 30 212"/></g>
+<g id="legM"><path class="mu" fill="var(--muscle2)" d="M54 248 Q46 290 58 324 Q68 304 68 264Z"/><path class="mu" fill="var(--muscle2)" d="M72 256 Q70 292 76 324 Q86 292 84 256Z"/><path class="mu" fill="var(--muscle2)" d="M60 332 Q54 348 62 366 L74 366 Q76 346 72 332Z"/><path fill="#dcae94" d="M58 374 L56 388 Q56 394 72 394 L90 394 Q92 384 86 374Z"/><path fill="none" stroke="#000" stroke-opacity=".22" d="M60 256 Q54 292 62 322 M78 258 Q78 290 80 322 M92 256 Q94 290 90 322 M62 336 Q58 352 64 366 M70 336 Q68 352 70 366"/></g>
+<g id="abone"><path d="M34 92 Q40 86 46 92 Q44 102 43 112 L44 148 Q48 154 50 160 Q42 166 36 160 Q38 154 40 148 L39 112 Q36 102 34 92Z"/><path d="M40 164 L28 212 L33 214 L44 168Z"/><path d="M46 164 L40 212 L45 214 L50 168Z"/><path fill="none" stroke-width="2" d="M24 222 L22 240 M28 222 L28 244 M32 222 L34 242"/></g>
+<g id="lbone"><path d="M82 248 Q74 244 72 252 Q76 258 80 260 L78 314 Q72 320 70 330 Q80 336 90 330 Q88 320 82 314 L84 262 Q92 256 92 250 Q90 246 82 248Z"/><ellipse cx="80" cy="327" rx="5" ry="6"/><path d="M70 338 Q68 354 72 372 L80 372 Q84 354 90 338Z"/><path fill="none" stroke-width="2" d="M92 340 L90 368 M66 380 L64 390 M72 380 L72 392 M78 380 L80 392 M84 378 L88 390"/></g>
+</defs>
+<g transform="translate(80,0)">
+<use href="#sil" fill="var(--muscle)" stroke="var(--line)" stroke-width="2"/>
+<path class="mu" fill="var(--muscle2)" d="M90 62 Q72 76 48 86 Q70 96 92 88Z M110 62 Q128 76 152 86 Q130 96 108 88Z"/>
+<path fill="none" stroke="#000" stroke-opacity=".22" d="M90 58 L98 82 M110 58 L102 82 M54 150 L64 172 M52 162 L64 186 M54 176 L66 200 M146 150 L136 172 M148 162 L136 186 M146 176 L134 200"/>
+<use href="#armM"/><use href="#armM" transform="translate(200,0) scale(-1,1)"/>
+<use href="#legM"/><use href="#legM" transform="translate(200,0) scale(-1,1)"/>
+<path d="M100 88 Q64 90 58 112 Q54 140 62 160 Q66 190 68 214 Q76 236 100 240 Q124 236 132 214 Q134 190 138 160 Q146 140 142 112 Q136 90 100 88Z" fill="#000" fill-opacity=".3"/>
+<ellipse cx="100" cy="36" rx="21" ry="27" fill="#dcae94" fill-opacity=".22" stroke="var(--line)" stroke-width="2"/>
+<use id="skin" href="#sil" fill="none" stroke="transparent" stroke-width="4"/>
+<g id="bones" class="oc" fill="var(--bone)" stroke="#7d93a8" fill-opacity=".5"><rect x="95" y="64.0" width="10" height="8" rx="3"/><rect x="95" y="74.6" width="10" height="8" rx="3"/><rect x="95" y="85.2" width="10" height="8" rx="3"/><rect x="95" y="95.8" width="10" height="8" rx="3"/><rect x="95" y="106.4" width="10" height="8" rx="3"/><rect x="95" y="117.0" width="10" height="8" rx="3"/><rect x="95" y="127.6" width="10" height="8" rx="3"/><rect x="95" y="138.2" width="10" height="8" rx="3"/><rect x="95" y="148.8" width="10" height="8" rx="3"/><rect x="95" y="159.4" width="10" height="8" rx="3"/><rect x="95" y="170.0" width="10" height="8" rx="3"/><rect x="95" y="180.6" width="10" height="8" rx="3"/><rect x="95" y="191.2" width="10" height="8" rx="3"/><rect x="95" y="201.8" width="10" height="8" rx="3"/><rect x="95" y="212.4" width="10" height="8" rx="3"/><path fill="none" stroke-width="2.4" d="M96 96 Q62 90 62 110 Q65 122 94 116 M104 96 Q138 90 138 110 Q135 122 106 116 M96 105 Q59 99 59 119 Q62 131 94 126 M104 105 Q141 99 141 119 Q138 131 106 126 M96 114 Q56 108 56 128 Q59 140 94 136 M104 114 Q144 108 144 128 Q141 140 106 136 M96 123 Q54 117 54 137 Q57 149 94 146 M104 123 Q146 117 146 137 Q143 149 106 146 M96 132 Q52 126 52 146 Q55 158 94 156 M104 132 Q148 126 148 146 Q145 158 106 156 M96 141 Q52 135 52 155 Q55 167 94 166 M104 141 Q148 135 148 155 Q145 167 106 166 M96 150 Q53 144 53 164 Q56 176 94 176 M104 150 Q147 144 147 164 Q144 176 106 176 M96 159 Q55 153 55 173 Q58 185 94 186 M104 159 Q145 153 145 173 Q142 185 106 186 M96 168 Q57 162 57 182 Q60 194 94 196 M104 168 Q143 162 143 182 Q140 194 106 196 M96 177 Q60 171 60 191 Q63 203 94 206 M104 177 Q140 171 140 191 Q137 203 106 206 M98 86 Q80 80 54 92 M102 86 Q120 80 146 92"/><path d="M92 90 Q100 86 108 90 L106 102 L104 142 L100 152 L96 142 L94 102Z"/><path d="M80 30 Q78 10 100 9 Q122 10 120 30 Q121 40 117 46 L83 46 Q79 40 80 30Z"/><path fill="none" stroke-width="1.2" d="M82 22 Q100 16 118 22 M82 26 Q80 36 84 44 M118 26 Q120 36 116 44 M84 40 Q82 48 88 51 M116 40 Q118 48 112 51"/><ellipse cx="91" cy="38" rx="5.5" ry="4.5" fill="#1b1f27"/><ellipse cx="109" cy="38" rx="5.5" ry="4.5" fill="#1b1f27"/><path d="M100 43 L96.5 51 L103.5 51Z" fill="#1b1f27"/><path d="M89 50 L111 50 L110 57 L90 57Z"/><path fill="none" stroke-width="1" d="M94 50 V57 M98 50 V57 M102 50 V57 M106 50 V57 M90 53.5 H110"/><path d="M83 46 Q83 62 100 64 Q117 62 117 46 L112 55 Q100 61 88 55Z"/><path fill="none" stroke-width="3" d="M64 192 Q50 200 52 222 Q58 244 76 248 Q86 246 92 236 L92 218 Q80 214 74 200Z M136 192 Q150 200 148 222 Q142 244 124 248 Q114 246 108 236 L108 218 Q120 214 126 200Z M92 218 L108 218 L104 244 L100 250 L96 244Z"/><use href="#abone"/><use href="#abone" transform="translate(200,0) scale(-1,1)"/><use href="#lbone"/><use href="#lbone" transform="translate(200,0) scale(-1,1)"/></g>
+<g id="kidneys" class="oc"><path d="M72 182 Q82 184 80 198 Q76 210 68 206 Q74 196 72 182Z M128 182 Q118 184 120 198 Q124 210 132 206 Q126 196 128 182Z" fill="#9b3f3a"/><path d="M72 178 l8 -2 l-2 6z M128 178 l-8 -2 l2 6z" fill="#e5b84a"/></g>
+<path d="M62 158 Q100 142 138 158" fill="none" stroke="#b86a5e" stroke-width="4"/>
+<g id="liver" class="oc"><path d="M60 160 Q84 152 112 158 Q120 174 104 190 Q76 196 62 182Z" fill="#a1532f"/><path d="M92 158 Q94 176 88 190" fill="none" stroke="#6e3419" stroke-width="1.5"/><ellipse cx="88" cy="193" rx="5" ry="6" fill="#6b8e3a"/></g>
+<g id="spleen" class="oc"><path d="M140 164 Q150 168 148 188 Q142 194 136 188 Q140 176 136 168Z" fill="#7a2f4a"/></g>
+<g id="stomach" class="oc"><path d="M100 104 Q104 140 114 162" fill="none" stroke="#e8a07c" stroke-width="4"/><path d="M112 160 Q140 156 144 178 Q142 198 126 196 Q112 192 110 176Z" fill="#e8a07c"/><path d="M118 170 Q128 168 136 172 M118 178 Q128 176 138 180 M118 186 Q128 184 134 188" fill="none" stroke="#b96c50" stroke-width="1.2"/></g>
+<g id="lungs" class="oc"><path d="M60 98 Q54 132 62 160 Q82 166 94 152 L94 106 Q78 92 60 98Z M140 98 Q146 132 138 160 Q118 166 106 152 L106 106 Q122 92 140 98Z" fill="#9fd0ea"/><path d="M62 128 Q78 124 94 134 M138 128 Q122 124 106 134 M140 112 Q124 112 106 118" fill="none" stroke="#6aa6c9" stroke-width="1.5"/><path d="M100 62 V104" stroke="#e3f0f8" stroke-width="5" stroke-dasharray="3 2" fill="none"/><path d="M100 104 L84 122 M100 104 L116 122 M84 122 L78 136 M84 122 L88 140 M116 122 L122 136 M116 122 L112 140" stroke="#e3f0f8" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
+<g id="heart" class="oc"><path d="M100 118 V90" stroke="#4a78c2" stroke-width="5" fill="none"/><path d="M104 114 Q106 96 118 94 Q128 94 128 106" stroke="#c0392b" stroke-width="6" fill="none"/><path d="M112 116 Q122 106 132 112" stroke="#5b8ad0" stroke-width="5" fill="none"/><path d="M102 118 Q116 108 128 120 Q134 138 112 160 Q92 140 96 124 Q98 116 102 118Z" fill="#d94b60"/><path d="M104 124 Q112 140 114 152 M106 122 Q118 126 124 136" fill="none" stroke="#8e1f2f" stroke-width="1.5"/></g>
+<g id="gut" class="oc" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M66 238 V204 Q66 196 74 196 H126 Q134 196 134 204 V238" stroke="#c98466" stroke-width="6"/><path d="M78 207 q8 -7 12 0 t12 0 t12 0 t12 0 M78 215 q8 7 12 0 t12 0 t12 0 t12 0 M78 223 q8 -7 12 0 t12 0 t12 0 t12 0 M78 231 q8 7 12 0 t12 0 t12 0 t12 0" stroke="#e8aa84" stroke-width="5"/></g>
+<g id="brain" class="oc"><path d="M83 22 Q82 12 100 11 Q118 12 117 22 Q116 31 100 31 Q84 31 83 22Z" fill="#e8a6b8"/><path d="M100 12 V30 M90 17 q6 3 0 7 M110 17 q-6 3 0 7 M91 26 q5 -3 9 0 M109 26 q-5 -3 -9 0" fill="none" stroke="#b9677f" stroke-width="1.2"/></g>
+<path id="hair" d="M78 28 Q76 6 100 6 Q124 6 122 28 Q118 12 100 10 Q82 12 78 28Z" fill="var(--ink)"/>
+</g>
+<g id="rays" stroke-width="1.5" style="opacity:0"><line class="ray" x1="58" y1="180" x2="200" y2="40"/><line class="ray" x1="58" y1="180" x2="235" y2="100"/><line class="ray" x1="58" y1="180" x2="240" y2="135"/><line class="ray" x1="58" y1="180" x2="240" y2="165"/><line class="ray" x1="58" y1="180" x2="238" y2="200"/><line class="ray" x1="58" y1="180" x2="215" y2="270"/><line class="ray" x1="58" y1="180" x2="215" y2="350"/></g>
+<g transform="translate(34,180)"><circle r="24" fill="#f0a500"/><g fill="#1a1a1a"><path d="M0 0 L-9.3 -16.1 A18.6 18.6 0 0 1 9.3 -16.1Z"/><path transform="rotate(120)" d="M0 0 L-9.3 -16.1 A18.6 18.6 0 0 1 9.3 -16.1Z"/><path transform="rotate(240)" d="M0 0 L-9.3 -16.1 A18.6 18.6 0 0 1 9.3 -16.1Z"/><circle r="3.6"/></g></g>
+</svg>
+</div>
+<div>
+<div class="card">
+<div class="dose"><span id="v">0,0</span> <small>Sv (sievert)</small></div>
+<div class="scale"></div>
+<input id="r" type="range" min="0" max="15" step="0.1" value="0" aria-label="Dose de radiação em sieverts">
+<div class="chips" id="chips"></div>
+</div>
+<div class="card" style="margin-top:12px" aria-live="polite">
+<span class="tag" id="tag"></span>
+<h2 id="nome"></h2>
+<ul id="sint"></ul>
+<p id="orgaos" style="margin:10px 0 0;color:var(--mut)"></p>
+</div>
+<div class="card" style="margin-top:12px" aria-live="polite">
+<p class="note" style="margin:0 0 8px">Escolha um órgão aqui ou toque nele no corpo.</p>
+<div class="chips" id="obtn" style="margin-top:0"></div>
+<h2 id="on"></h2>
+<span class="tag" id="ot"></span>
+<p id="od" style="margin:8px 0 0"></p>
+</div>
+</div>
+</div>
+<p class="note">Para comparar: um raio-X de tórax dá cerca de 0,0001 Sv. Valores aproximados, usados para estudo. Um corpo exposto de uma só vez a doses acima de 1 Sv já apresenta sintomas.</p>
+</main>
+<script>
+var N="Sem alteração nesta dose.";
+var E=[
+{max:0.25,n:"Sem efeitos perceptíveis",c:"#2f9e6e",s:["Nenhum sintoma imediato.","Pode haver um pequeno aumento do risco de câncer ao longo da vida."],o:{}},
+{max:1,n:"Alterações leves no sangue",c:"#7fa832",s:["Queda leve de glóbulos brancos, só vista em exame.","Normalmente sem sintomas."],o:{m:1}},
+{max:2,n:"Doença leve da radiação",c:"#e8a31a",s:["Náusea, vômito e cansaço nas primeiras horas.","Queda de defesas do organismo.","Recuperação na maioria dos casos."],o:{m:1,g:1}},
+{max:6,n:"Síndrome hematopoiética",c:"#e5701a",s:["A medula óssea para de produzir células do sangue.","Infecções e hemorragias.","Queda de cabelo e queimaduras na pele.","Pode ser fatal sem tratamento."],o:{m:2,g:1,h:1,p:1}},
+{max:10,n:"Síndrome gastrointestinal",c:"#d9382b",s:["O revestimento do intestino é destruído.","Diarreia intensa, desidratação e infecção grave.","Falência da medula óssea e inflamação nos pulmões.","Alta chance de morte em dias ou semanas."],o:{m:2,g:2,h:1,p:2,l:1}},
+{max:99,n:"Síndrome neurovascular",c:"#8c1414",s:["Atinge o cérebro e os vasos sanguíneos.","Confusão, convulsões e perda de consciência.","Colapso da circulação.","Morte em horas ou poucos dias."],o:{b:2,m:2,g:2,h:1,p:2,l:2,c:2}}
+];
+var ORG={
+brain:["Cérebro","b",["Sem dano. Os neurônios quase não se dividem, por isso são pouco sensíveis a doses baixas.","Sem dano perceptível. O cérebro adulto resiste bem a essa dose.","Sem dano direto. A dor de cabeça e o cansaço vêm da reação geral do corpo, e a náusea é comandada por uma região do tronco cerebral.","Ainda sem lesão direta importante. Tontura, fraqueza e confusão leve vêm da anemia, da febre e das infecções.","Ainda sem lesão direta grave. Febre alta, desidratação e infecção podem causar confusão e sonolência.","Dano direto: os vasos do cérebro vazam, ele incha (edema) e os neurônios são lesados. Vêm confusão, perda de equilíbrio e coordenação, convulsões, coma e morte em horas ou poucos dias."]],
+lungs:["Pulmões","l",["Sem dano. As células dos pulmões se renovam devagar e resistem bem a doses baixas.","Sem dano perceptível nesta dose.","Sem dano direto nesta dose.","Poupados na fase aguda. Mas, com poucos glóbulos brancos, o risco de pneumonia por bactérias e vírus aumenta muito.","Pneumonite por radiação: a parede dos alvéolos inflama, com tosse seca, febre e falta de ar de 1 a 3 meses depois. Se persistir, forma cicatrizes (fibrose) que endurecem o pulmão.","Inflamação grave dos alvéolos e acúmulo de líquido (edema pulmonar). A troca de oxigênio falha, com falta de ar intensa e queda do oxigênio no sangue."]],
+heart:["Coração","c",["Sem dano nesta dose.","Sem dano nesta dose.","Sem dano nesta dose.","Sem dano direto. A anemia faz o coração bater mais rápido para levar oxigênio, e as infecções aumentam a carga sobre ele.","Pouco afetado nas primeiras semanas. Anos depois, doses altas podem lesar vasos e válvulas e aumentar o risco de doença cardíaca.","Os pequenos vasos ficam permeáveis e deixam o líquido escapar. A pressão cai, a circulação entra em colapso e o coração não mantém o fluxo de sangue (choque)."]],
+liver:["Fígado","",["Sem dano. O fígado se renova e é resistente a essas doses.","Sem dano. O fígado se renova e é resistente a essas doses.","Sem dano. O fígado se renova e é resistente a essas doses.","Órgão relativamente resistente. Continua funcionando, mas pode ficar sobrecarregado pelas infecções e pelos remédios do tratamento.","Pode inflamar e liberar enzimas no sangue (visível em exames). Em geral resiste melhor que o intestino e a medula.","Dano nas células e nos pequenos vasos do fígado. Ele falha junto com os outros órgãos."]],
+stomach:["Estômago","g",["Sem alteração nesta dose.","Sem alteração perceptível.","Náusea e vômito, em geral de 1 a 6 horas após a exposição. Surgem porque a radiação ativa o centro do vômito no cérebro, mesmo sem lesão grave no estômago.","A mucosa se irrita e perde células: náusea persistente, perda de apetite e risco de úlceras e sangramento leve.","A mucosa é destruída: vômitos intensos, dor e sangramento digestivo (vômito com sangue).","Destruição grave da mucosa, com vômito e sangramento intensos desde as primeiras horas."]],
+gut:["Intestinos","g",["Sem alteração nesta dose.","Sem alteração perceptível.","Cólicas e diarreia leve podem aparecer e passam em poucos dias.","As células da parede intestinal morrem mais rápido do que são renovadas: diarreia, cólicas e perda de apetite, com recuperação lenta.","A mucosa é destruída em dias: diarreia intensa e com sangue, perda de água e sais, e bactérias do intestino passam para o sangue e causam infecção generalizada (sepse). Sem tratamento, costuma ser fatal.","Destruição total da mucosa em poucos dias, com choque e morte."]],
+kidneys:["Rins","",["Sem dano. Os rins são pouco sensíveis a essas doses.","Sem dano. Os rins são pouco sensíveis a essas doses.","Sem dano. Os rins são pouco sensíveis a essas doses.","Sem dano direto agora. A desidratação por vômito e diarreia pode sobrecarregá-los.","Sofrem com a desidratação e a infecção. O dano da radiação costuma aparecer meses depois, como perda gradual da função.","A queda de pressão e a falência de outros órgãos levam à insuficiência renal aguda."]],
+spleen:["Baço","m",["Sem alteração nesta dose.","Começa a perder linfócitos, sem mudança visível por fora.","Perda leve de linfócitos no baço e nos linfonodos: as defesas ficam um pouco mais fracas.","Baço e linfonodos perdem muitos linfócitos e o corpo fica com poucas defesas contra infecções.","O sistema imunológico quase desaparece: infecções comuns viram ameaças graves.","Falência do tecido linfático junto com a da medula óssea."]],
+bones:["Ossos e medula","m",["Sem alteração nesta dose.","Os linfócitos (glóbulos brancos) caem um pouco, o que só aparece em exame de sangue.","Queda moderada de linfócitos e plaquetas: cansaço e mais risco de infecção. A recuperação leva semanas.","As células-tronco da medula morrem e ela quase para de produzir sangue. Sem glóbulos brancos vêm infecções, sem plaquetas vêm hemorragias e sem glóbulos vermelhos vem anemia. Pode ser preciso transfusão ou transplante de medula.","Falência da medula, sem recuperação espontânea. O sangue fica sem defesa e sem capacidade de coagular.","Falência total da medula óssea, junto com a falência de outros órgãos."]],
+skin:["Pele","p",["Sem alteração nesta dose.","Sem alteração perceptível.","No máximo uma vermelhidão leve e passageira (eritema).","Vermelhidão, coceira e inchaço, depois bolhas e descamação. As feridas demoram a cicatrizar.","Queimaduras graves por radiação: bolhas grandes, feridas profundas e úlceras de cicatrização muito lenta.","Queimaduras profundas com morte do tecido (necrose) e alto risco de infecção."]],
+hair:["Cabelo","h",["Sem alteração nesta dose.","Sem alteração perceptível.","Sem queda importante nesta dose.","A queda de cabelo (epilação) começa por volta de 3 Sv, de 2 a 3 semanas depois, porque os folículos param de se dividir. Em geral o cabelo volta.","Queda total do cabelo e dos pelos. Em alguns casos o cabelo volta mais fino.","Queda total. Em doses muito altas os folículos morrem e o cabelo pode não voltar."]]
+};
+var P=[["0,5 Sv",0.5],["1,5 Sv",1.5],["4 Sv",4],["8 Sv",8],["12 Sv",12]];
+var r=document.getElementById("r"),lvl={},sel="bones",si=0,sc="#999";
+function sh(){var O=ORG[sel],l=lvl[sel]||0;
+document.getElementById("on").textContent=O[0];
+var t=document.getElementById("ot");t.textContent=O[1]?["Sem dano","Dano leve ou moderado","Dano grave"][l]:"Pouco sensível à radiação";t.style.background=l?sc:"#5a6b7b";
+document.getElementById("od").textContent=O[2][si];
+var b=document.querySelectorAll("#obtn button");for(var i=0;i<b.length;i++)b[i].setAttribute("aria-pressed",b[i].dataset.id==sel);}
+function up(){
+var d=parseFloat(r.value);si=E.length-1;
+for(var i=0;i<E.length;i++){if(d<E[i].max){si=i;break;}}
+var s=E[si];sc=s.c;
+document.getElementById("v").textContent=d.toFixed(1).replace(".",",");
+var t=document.getElementById("tag");t.textContent=d>=10?"Dose letal":d>=1?"Dose alta":"Dose baixa";t.style.background=s.c;
+document.getElementById("nome").textContent=s.n;
+var ul=document.getElementById("sint");ul.innerHTML="";
+s.s.forEach(function(x){var li=document.createElement("li");li.textContent=x;ul.appendChild(li);});
+var o=s.o;
+for(var id in ORG){var k=ORG[id][1],l=k?(o[k]||0):0;lvl[id]=l;if(id=="hair"||id=="skin")continue;var el=document.getElementById(id);el.setAttribute("class","oc"+(l?" d"+l:""));el.style.setProperty("--c",s.c);}
+document.getElementById("hair").style.opacity=o.h?0.12:1;
+document.getElementById("skin").setAttribute("stroke",o.p?s.c:"transparent");
+var rg=document.getElementById("rays");rg.style.opacity=d?Math.min(1,0.3+d/8):0;rg.setAttribute("stroke-width",(1.2+d/5).toFixed(1));
+document.getElementById("sv").style.setProperty("--spd",Math.max(0.35,1.4-d*0.07).toFixed(2)+"s");
+var nm=[];if(o.b)nm.push("cérebro");if(o.m)nm.push("medula óssea");if(o.g)nm.push("intestino");if(o.l)nm.push("pulmões");if(o.c)nm.push("coração");if(o.p)nm.push("pele");if(o.h)nm.push("cabelo");
+document.getElementById("orgaos").textContent=nm.length?"Mais afetados: "+nm.join(", ")+".":"Nenhum órgão com dano visível.";
+sh();
+}
+var c=document.getElementById("chips");
+P.forEach(function(p){var b=document.createElement("button");b.type="button";b.textContent=p[0];b.onclick=function(){r.value=p[1];up();};c.appendChild(b);});
+var ob=document.getElementById("obtn");
+for(var id in ORG){(function(id){var b=document.createElement("button");b.type="button";b.dataset.id=id;b.textContent=ORG[id][0];b.onclick=function(){sel=id;sh();};ob.appendChild(b);})(id);}
+document.getElementById("sv").addEventListener("click",function(e){var g=e.target.closest(".oc");if(g){sel=g.id;sh();}});
+r.addEventListener("input",up);up();
+</script>
+</body>
+</html>
